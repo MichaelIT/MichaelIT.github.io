@@ -1,8 +1,8 @@
 = 使用ssh建立文件服务器(SFTP)
 :hp-tags: Linux, SFtp, SSH,
-image::https://raw.githubusercontent.com/MichaelIT/MichaelIT.github.io/master/images/DOGE.jpg[]
 # 使用ssh建立文件服务器(SFTP)
 
+image::https://raw.githubusercontent.com/MichaelIT/MichaelIT.github.io/master/images/DOGE.jpg[]
 ## 案例
 公司要求实现一个简单的HTML服务器给产品部门上传产品部门的相关说明（Axure导出的html）
 
