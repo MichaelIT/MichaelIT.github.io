@@ -1,10 +1,1 @@
-{
-  "meta": {
-    "username": "MichaelIT",
-    "repositoryName": "MichaelIT.github.io",
-    "branch": "master"
-  },
-  "theme": {
-    "name": "Casper"
-  }
-}
+{"meta":{"username":"MichaelIT","repositoryName":"MichaelIT.github.io","branch":"master"},"site":{"title":"雪山飞狐","description":"michael的技术博客","url":"https://MichaelIT.github.io"},"socialnetwork":{},"theme":{"name":"Casper","url":"//MichaelIT.github.io/themes/Casper"}}
