@@ -1,5 +1,6 @@
 = 使用ssh建立文件服务器(SFTP)
 :hp-tags: Linux, SFtp, SSH,
+image::https://raw.githubusercontent.com/MichaelIT/MichaelIT.github.io/master/images/DOGE.jpg[]
 # 使用ssh建立文件服务器(SFTP)
 
 ## 案例
