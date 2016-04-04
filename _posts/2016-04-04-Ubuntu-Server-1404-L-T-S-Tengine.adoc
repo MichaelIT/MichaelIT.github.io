@@ -3,4 +3,22 @@
 ## 安装前准备
 
 	$ apt-get update
-    $ apt-get install libpcre++-dev libssl-dev zlib1g-dev
+    $ apt-get install libpcre++-dev libssl-dev zlib1g-dev git
+    
+
+## 源码安装
+
+    $ git clone https://github.com/alibaba/tengine.git
+    $ ./configure
+	$ make
+	$ make install
+
+## 测试
+
+	$ ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
+    #启动
+    $ nginx 
+    #停止
+    $ nginx -s stop
+    #重启
+    $ nginx -s reload
