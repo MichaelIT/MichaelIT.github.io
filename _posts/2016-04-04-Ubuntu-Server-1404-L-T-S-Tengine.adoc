@@ -1,3 +1,6 @@
+= Ubuntu Server 14.04 LTS 部署 Tengine
+:hp-tags: Linux, Ubuntu, Tengine,运维,
+
 # Ubuntu Server 14.04 LTS 部署 Tengine
 
 ## 安装前准备
@@ -69,7 +72,7 @@ Tengine兼容全部nginx语法，所以为了方便管理多个站点，这里�
 配置服务：
 
 	$ wget https://raw.github.com/JasonGiedymin/nginx-init-ubuntu/master/nginx -O /etc/init.d/nginx
-    $ chmod 755 /etc/init.d/nginx
+    	$ chmod 755 /etc/init.d/nginx
    
 配置开机启动，配置开机启动使用到了一个方便的开机启动工具sysv-rc-conf
 
