@@ -9,6 +9,7 @@
 ## 源码安装
 
     $ git clone https://github.com/alibaba/tengine.git
+    #注意，如果需要特定的编译选项，请查看文档加上，例如ipv6的支持需要加上参数--with-ipv6
     $ ./configure
 	$ make
 	$ make install
@@ -16,9 +17,47 @@
 ## 测试
 
 	$ ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
-    #启动
+    #启动,注意，如果安装过nginx，会有冲突，请先卸载nginx
     $ nginx 
     #停止
     $ nginx -s stop
     #重启
+    $ nginx -s reload
+    #检查配置文件
+    $ nginx -t
+    
+
+## 修改配置文件（可选）
+
+Tengine兼容全部nginx语法，所以为了方便管理多个站点，这里修改一下配置文件。在最后一个'}'之前添加代码
+
+	include /usr/local/nginx/conf/conf.d/*.conf;
+   	include /usr/local/nginx/conf/sites-enabled/*;
+ 
+结尾部分代码如下：
+
+	
+	  ...
+      # HTTPS server
+      #
+      #server {
+      #    listen       443 ssl;
+      #    server_name  localhost;
+      #    ssl_certificate      cert.pem;
+      #    ssl_certificate_key  cert.key;
+      #    ssl_session_cache    shared:SSL:1m;
+      #    ssl_session_timeout  5m;
+      #    ssl_ciphers  HIGH:!aNULL:!MD5;
+      #    ssl_prefer_server_ciphers  on;
+      #    location / {
+      #        root   html;
+      #        index  index.html index.htm;
+      #    }
+      #}
+      include /usr/local/nginx/conf/conf.d/*.conf;
+      include /usr/local/nginx/conf/sites-enabled/*;
+	}
+    
+   
+  	#重启
     $ nginx -s reload
