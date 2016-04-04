@@ -1,0 +1,81 @@
+= 使用ssh建立文件服务器(SFTP)
+:hp-tags: Linux, SFtp, SSH,运维,
+
+# 使用ssh建立文件服务器(SFTP)
+
+image::https://raw.githubusercontent.com/MichaelIT/MichaelIT.github.io/master/images/DOGE.jpg[]
+## 案例
+公司要求实现一个简单的HTML服务器给产品部门上传产品部门的相关说明（Axure导出的html）
+
+## 现有环境
+ 
+一台已经在跑其他的系统Ubuntu Server 14.04 LTS。
+
+## 实现思路
+
+利用已有的SSH，新增一个只能访问特定的目录的用户，用以发布Axure相关文件。
+
+- 新增一个用户组*sftp*
+- 把用户组*sftp*的用户路径制定为*/data/sftp*
+- 在sftp组中新增一个*product*用户并使用*chroot*锁定到目录*/data/sftp/product*中
+
+## 过程
+
+### 新建用户组以及用户
+
+    //新增用户组sftp
+    # sudo addgroup sftp
+    //新增用户组sftp的chroot目录
+    # sudo mkdir /data/sftp
+    # sudo chmod g+rx /data/sftp
+    //新增用户组sftp中的prodcut用户，并绑定home路径到data/sftp/product
+    # sudo adduser --home /data/sftp/product --ingroup sftp product
+
+
+### SSH配置
+	
+    //编辑配置文件，ssh服务配置文件一般在 "/etc/ssh/sshd_config"
+    # sudo vim /etc/ssh/sshd_config
+
+在最后加上以下代码
+
+    #对用户组sftp的ssh服务进行配置
+    Match Group sftp
+    #强制用户使用sftp服务
+    ForceCommand internal-sftp
+    #限制该用户组的用户只能使用指定的目录，%u表示登录的用户用户名，例如本例子中的product
+    ChrootDirectory /xlhdata/sftp/%u
+    PermitTunnel no
+    AllowAgentForwarding no
+    AllowTcpForwarding no
+    X11Forwarding no
+
+另外如果是禁用了ssh密码登录的情况，需要为product用户配置ssh key
+
+    //配置方式和一般用户配置方式一致，把公钥复制到~/.ssh/authorized_keys即可,如果authorized_keys不存在，新建一个
+    //假如已经复制公钥到用户home目录下(/data/sftp/product/id_product.pub)
+    cd /data/sftp/product/
+    cat id_product.pub > .ssh/authorized_keys
+    
+## 测试
+
+    //参数i后面跟着私钥的路径，serverip为服务器ip／域名，参数p后面跟着ssh服务端口
+    sftp  -i ~/path/to/your/sshkey product@serverip -p port
+    
+## 常见问题
+
+遇到问题请先查看ssh日志，本文环境ssh日志目录为*/var/log/auth.log* 
+
+### fatal: bad ownership or modes for chroot directory component
+这个错误的原因是/data/sftp的每一级目录的用户都必须是root，解决方案：
+
+    #sudo chown root path
+
+### This service allows sftp connections only
+本文已经限制了用户只能使用sftp登录，不支持
+
+### 如何使用ssh key登录不在本文讨论范围内
+
+
+## 参考：
+[Restricted SFTP-only access to a single directory using OpenSSH](http://www.example.com)
