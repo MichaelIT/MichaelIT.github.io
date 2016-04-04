@@ -1,0 +1,6 @@
+# Ubuntu Server 14.04 LTS 部署 Tengine
+
+## 安装前准备
+
+	$ apt-get update
+    $ apt-get install libpcre++-dev libssl-dev zlib1g-dev
